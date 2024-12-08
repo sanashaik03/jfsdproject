@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/add-course.css">
+    <title>Add Course</title>
+    <style>
+        body {
+            background: url('https://www.shutterstock.com/image-photo/flat-lay-composition-laptop-pen-260nw-1686600523.jpg') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+        }
+        .form-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            width: 40%;
+            margin: 5% auto;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Add New Course</h2>
+        <form id="add-course-form">
+            <div class="form-group">
+                <label for="course-title">Course Title:</label>
+                <input type="text" id="course-title" name="course-title" required>
+            </div>
+            <div class="form-group">
+                <label for="course-description">Course Description:</label>
+                <textarea id="course-description" name="course-description" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="course-category">Course Category:</label>
+                <input type="text" id="course-category" name="course-category" required>
+            </div>
+            <div class="form-group">
+                <label for="course-image">Course Image URL:</label>
+                <input type="url" id="course-image" name="course-image" required>
+            </div>
+            <button type="button" onclick="addCourse()">Add Course</button>
+        </form>
+    </div>
+
+    <script>
+        function addCourse() {
+            const title = document.getElementById("course-title").value;
+            const description = document.getElementById("course-description").value;
+            const category = document.getElementById("course-category").value;
+            const image = document.getElementById("course-image").value;
+
+            const newCourse = { title, description, category, image };
+
+            // Retrieve existing courses from localStorage or initialize an empty array
+            const addedCourses = JSON.parse(localStorage.getItem("addedCourses")) || [];
+
+            // Add the new course to the array
+            addedCourses.push(newCourse);
+
+            // Store the updated courses array back to localStorage
+            localStorage.setItem("addedCourses", JSON.stringify(addedCourses));
+
+            alert("Course added successfully!");
+            document.getElementById("add-course-form").reset(); // Reset the form
+        }
+    </script>
+</body>
+</html>

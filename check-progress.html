@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Progress Overview</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #555556;
+            color: #333;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #4b7bec;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar .logo a {
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+        }
+
+        .container {
+            margin: 40px auto;
+            max-width: 90%;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #4b7bec;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        thead {
+            background-color: #4b7bec;
+            color: white;
+        }
+
+        th, td {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        tbody tr:hover {
+            background-color: #f1c40f;
+            color: #fff;
+        }
+
+        .form-section {
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group button {
+            padding: 10px 20px;
+            background-color: #4b7bec;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-group button:hover {
+            background-color: #3a5cb0;
+        }
+
+        canvas {
+            margin: 20px auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo"><a href="index.html">Online Course Management System</a></div>
+        <ul class="nav-links">
+            
+            <li><a href="educator-dashboard.html">Back</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h2>Student Progress Overview</h2>
+
+        <!-- Form for Adding or Updating Data -->
+        <div class="form-section">
+            <form id="progress-form">
+                <div class="form-group">
+                    <label for="student-name">Student Name:</label>
+                    <input type="text" id="student-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="course-title">Course Title:</label>
+                    <input type="text" id="course-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="progress">Progress (%):</label>
+                    <input type="number" id="progress" required>
+                </div>
+                <div class="form-group">
+                    <label for="marks">Marks Obtained:</label>
+                    <input type="number" id="marks" required>
+                </div>
+                <div class="form-group">
+                    <label for="last-submission">Last Submission Date:</label>
+                    <input type="date" id="last-submission" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" id="submit-btn">Add Student</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Course Title</th>
+                    <th>Progress (%)</th>
+                    <th>Marks</th>
+                    <th>Last Submission Date</th>
+                </tr>
+            </thead>
+            <tbody id="progress-table-body">
+                <!-- Dynamic rows will be added here -->
+            </tbody>
+        </table>
+
+        <!-- Graph Section -->
+        <canvas id="progress-chart" width="400" height="200"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const form = document.getElementById('progress-form');
+        const tableBody = document.getElementById('progress-table-body');
+        const ctx = document.getElementById('progress-chart').getContext('2d');
+
+        const data = {
+            labels: [], // Student Names
+            datasets: [
+                {
+                    label: "Marks",
+                    data: [], // Marks
+                    backgroundColor: "rgba(75, 192, 192, 0.2)",
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderWidth: 1,
+                },
+            ],
+        };
+
+        const chart = new Chart(ctx, {
+            type: "bar",
+            data: data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        });
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById('student-name').value;
+            const course = document.getElementById('course-title').value;
+            const progress = document.getElementById('progress').value;
+            const marks = document.getElementById('marks').value;
+            const submissionDate = document.getElementById('last-submission').value;
+
+            // Add to table
+            const newRow = tableBody.insertRow();
+            newRow.innerHTML = `
+                <td>${name}</td>
+                <td>${course}</td>
+                <td>${progress}%</td>
+                <td>${marks}</td>
+                <td>${submissionDate}</td>
+            `;
+
+            // Update chart
+            data.labels.push(name);
+            data.datasets[0].data.push(marks);
+            chart.update();
+
+            form.reset();
+        });
+    </script>
+</body>
+</html>

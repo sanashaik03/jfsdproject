@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Assignment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            background: url('https://marketplace.canva.com/EAGFkmfdLP8/1/0/1600w/canva-brown-bold-background-instagram-post-DwzHWC9oTFs.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        .form-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+        .form-container label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        .form-container input, .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .form-container button:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Add Assignment</h2>
+        <form id="add-assignment-form">
+            <label for="course">Course Name:</label>
+            <input type="text" id="course" name="course" placeholder="Enter course name" required>
+            
+            <label for="title">Assignment Title:</label>
+            <input type="text" id="title" name="title" placeholder="Enter assignment title" required>
+            
+            <label for="dueDate">Due Date:</label>
+            <input type="date" id="dueDate" name="dueDate" required>
+            
+            <label for="instructions">Instructions:</label>
+            <textarea id="instructions" name="instructions" rows="4" placeholder="Enter assignment instructions" required></textarea>
+            
+            <button type="submit">Add Assignment</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('add-assignment-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Simulate saving to the backend
+            const assignment = {
+                course: document.getElementById('course').value,
+                title: document.getElementById('title').value,
+                dueDate: document.getElementById('dueDate').value,
+                instructions: document.getElementById('instructions').value
+            };
+            
+            console.log('Assignment added:', assignment);
+            alert('Assignment added successfully!');
+            this.reset();
+        });
+    </script>
+</body>
+</html>

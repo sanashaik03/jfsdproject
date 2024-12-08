@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/student-dashboard.css">
+    <title>Student Dashboard</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fc;
+        }
+
+        .navbar {
+            background-color: #101010;
+            padding: 15px 30px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .logo a {
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .navbar .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            margin-left: auto;
+        }
+
+        .navbar .nav-links li {
+            margin: 0 20px;
+        }
+
+        .navbar .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar .nav-links a:hover {
+            color: #ff6f61;
+        }
+
+        /* Search Bar and Categories */
+        .navbar .search-container {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .search-container input[type="text"] {
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: none;
+            width: 200px;
+            margin-right: 15px;
+        }
+
+        .navbar select {
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: none;
+            background-color: #fff;
+            color: #333;
+        }
+
+        /* Container for Dashboard */
+        .container {
+            padding: 40px 60px;
+        }
+
+        h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        h3, h5 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #7a7979;
+            text-align: center;
+        }
+
+        .dashboard-section {
+            margin-bottom: 40px;
+        }
+
+        .dashboard-section h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        /* Grid Layout for Courses */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .course-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .course-card:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .course-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .course-card .course-info {
+            padding: 15px;
+        }
+
+        .course-card .course-info h4 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .course-card .course-info p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .course-card button {
+            background-color: #ff6f61;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .course-card button:hover {
+            background-color: #ff4a3d;
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #101010;
+            color: #fff;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .navbar .nav-links {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .navbar .nav-links li {
+                margin: 5px 0;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 28px;
+            }
+
+            .dashboard-section h3 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo"><a href="index.html">Online Course Management System</a></div>
+        <ul class="nav-links">
+            <li><a href="feedback.html">Feedback</a></li>
+            <li><a href="logout.html">Logout</a></li>
+        </ul>
+        <div class="search-container">
+            <input type="text" id="search-bar" placeholder="Search Courses..." oninput="filterCourses()">
+            <select id="category-select" onchange="filterCourses()">
+                <option value="">Select Category</option>
+                <option value="programming">Programming</option>
+                <option value="ai">AI</option>
+                <option value="data-science">Data Science</option>
+                <option value="web-development">Web Development</option>
+                <option value="ui-ux-design">UI/UX Design</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div class="container">
+        <h2>Welcome to Your Online Course Management System</h2>
+        <h3>All the skills you need in one place</h3>
+        <h5>From critical skills to technical topics, This supports your professional development.</h5>
+
+        <!-- Courses Section -->
+        <div class="dashboard-section">
+            <h3>Available Courses</h3>
+            <div class="course-grid" id="course-list">
+                <!-- Courses will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Online Course Management System</p>
+    </footer>
+
+    <script>
+        // Dummy courses data with categories
+        const courses = [
+            { title: "Intro to Programming", description: "Learn the basics of programming.", category: "programming", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz-HzVouRCfz4g8X1AtAJlqO9nlCS-uoTq3A&s" },
+            { title: "AI for Beginners", description: "Start your journey in Artificial Intelligence.", category: "ai", image: "https://media.licdn.com/dms/image/v2/D5612AQGkRhdysDRElg/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1702369227775?e=2147483647&v=beta&t=7Wg7dVosrGq1JvaMz_t3xeDr8UPokRUifxZPtBpxRpw" },
+            { title: "Data Science Essentials", description: "Master the fundamentals of Data Science.", category: "data-science", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRc-d18qWriWCvAjG0FPcwFcOy4wrRwdN7B4w&s" },
+            { title: "Web Development 101", description: "Build websites from scratch.", category: "web-development", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP4iQEqhcwfbDNeFrKt-yd-wt99S02pz9mtg&s" },
+            { title: "UI/UX Design Mastery", description: "Learn to design user-friendly interfaces.", category: "ui-ux-design", image: "https://www.cdmi.in/courses@2x/ui-ux.webp" },
+            { title: "Advanced Programming", description: "Deep dive into advanced programming concepts.", category: "programming", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsmN-xDYSqi0puwcijffezwTa24ApGuHhOLg&s" },
+            { title: "Deep Learning", description: "Master deep learning techniques and frameworks.", category: "ai", image: "https://cdn-gcp.new.marutitech.com/robot_humanoid_using_tablet_computer_big_data_analytic_1_94eab7101e.jpg" },
+            { title: "Big Data Analysis", description: "Learn how to analyze large data sets using Hadoop.", category: "data-science", image: "https://www.systemskills.in/wp-content/uploads/2024/09/Data-Science-with-Python-Course-in-Pune.jpg" },
+            { title: "Front-End Web Development", description: "Build modern websites using HTML, CSS, and JavaScript.", category: "web-development", image: "https://salesqueen.org/wp-content/uploads/2022/05/React-JS-Development-1024x576.jpeg" },
+            { title: "User Research for UI/UX", description: "Learn how to conduct research to improve UX/UI.", category: "ui-ux-design", image: "https://www.way2smile.ae/wp-content/uploads/2019/11/UI-design-principles-for-popular-mobile-apps.png" }
+        ];
+
+        // Function to display courses based on filter
+        function displayCourses(filteredCourses) {
+            const courseList = document.getElementById('course-list');
+            courseList.innerHTML = ''; // Clear current courses
+            filteredCourses.forEach(course => {
+                const courseCard = document.createElement('div');
+                courseCard.classList.add('course-card');
+                courseCard.innerHTML = `
+                    <img src="${course.image}" alt="${course.title}">
+                    <div class="course-info">
+                        <h4>${course.title}</h4>
+                        <p>${course.description}</p>
+                        <button onclick="goToCourseDetails('${course.title}')">Enroll Now</button>
+                    </div>
+                `;
+                courseList.appendChild(courseCard);
+            });
+        }
+
+        // Function to filter courses based on search input and category
+        function filterCourses() {
+            const searchValue = document.getElementById('search-bar').value.toLowerCase();
+            const selectedCategory = document.getElementById('category-select').value;
+
+            const filteredCourses = courses.filter(course => {
+                const matchesSearch = course.title.toLowerCase().includes(searchValue);
+                const matchesCategory = !selectedCategory || course.category === selectedCategory;
+                return matchesSearch && matchesCategory;
+            });
+
+            displayCourses(filteredCourses);
+        }
+
+        // Function to navigate to course details page
+        function goToCourseDetails(courseTitle) {
+            const course = courses.find(c => c.title === courseTitle);
+            if (course) {
+                window.location.href = `course-details.html?course=${encodeURIComponent(course.title)}`;
+            }
+        }
+
+        // Initialize courses on page load
+        window.onload = function() {
+            displayCourses(courses);
+        };
+    </script>
+    <script>
+        // Function to load added courses from localStorage
+        function loadAddedCourses() {
+            const addedCourses = JSON.parse(localStorage.getItem("addedCourses")) || [];
+            return addedCourses;
+        }
+    
+        // Modified function to display courses, including dynamically added ones
+        function displayCourses() {
+            const courseList = document.getElementById('course-list');
+            courseList.innerHTML = ''; // Clear current courses
+    
+            // Display predefined courses
+            courses.forEach(course => {
+                const courseCard = document.createElement('div');
+                courseCard.classList.add('course-card');
+                courseCard.innerHTML = `
+                    <img src="${course.image}" alt="${course.title}">
+                    <div class="course-info">
+                        <h4>${course.title}</h4>
+                        <p>${course.description}</p>
+                        <button onclick="goToCourseDetails('${course.title}')">Enroll Now</button>
+                    </div>
+                `;
+                courseList.appendChild(courseCard);
+            });
+    
+            // Display dynamically added courses
+            const addedCourses = loadAddedCourses();
+            addedCourses.forEach(course => {
+                const courseCard = document.createElement('div');
+                courseCard.classList.add('course-card');
+                courseCard.innerHTML = `
+                    <img src="${course.image}" alt="${course.title}">
+                    <div class="course-info">
+                        <h4>${course.title}</h4>
+                        <p>${course.description}</p>
+                        <button onclick="goToCourseDetails('${course.title}')">Enroll Now</button>
+                    </div>
+                `;
+                courseList.appendChild(courseCard);
+            });
+        }
+    
+        // Initialize courses on page load
+        window.onload = function() {
+            displayCourses();
+        };
+    </script>
+    
+</body>
+</html>

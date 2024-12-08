@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Online Course Management System</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to your CSS file -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f0f0f0;
+        }
+
+        .signin-container {
+            display: flex;
+            width: 70%;
+            max-width: 1000px;
+            height: 80%;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .signin-container .left {
+            width: 50%;
+            background: url('https://www.shutterstock.com/image-photo/flat-lay-composition-laptop-pen-260nw-1686600523.jpg') no-repeat center center fixed;
+            background-size: cover;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .left h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #060606;
+        }
+
+        .left p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #0a0a0a;
+        }
+
+        .signin-container .right {
+            width: 50%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 16px;
+            margin: 10px 0 5px;
+            color: #333;
+        }
+
+        input, select, button {
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #101010;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0c0c0c;
+        }
+
+        .signin-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .signin-link a {
+            color: #090909;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .signin-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* For responsiveness */
+        @media (max-width: 768px) {
+            .signin-container {
+                flex-direction: column;
+                width: 100%;
+                height: auto;
+            }
+
+            .signin-container .left {
+                width: 100%;
+                height: auto;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+
+            .signin-container .right {
+                width: 100%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sign In Link at the top-left corner -->
+    <div class="signin-link">
+        <a href="signup.html">Don't have an Account? SIGN UP</a>
+    </div>
+
+    <div class="signin-container">
+        <!-- Left side with image -->
+        <div class="left">
+            <h2>Welcome Back</h2>
+            <p>Sign in to your account and continue your learning journey. Join thousands of students and educators!</p>
+        </div>
+
+        <!-- Right side with the sign-in form -->
+        <div class="right">
+            <h1>Sign In</h1>
+            <form id="signin-form" class="form-container">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address">
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password" minlength="6" title="Password should be at least 6 characters long">
+
+                <label for="role">Role:</label>
+                <select id="role" name="role" required>
+                    <option value="">Select Role</option>
+                    <option value="student">Student</option>
+                    <option value="educator">Educator</option>
+                </select>
+
+                <button type="submit">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- External JS File -->
+    <script src="signin.js"></script> <!-- Link to your signin.js file -->
+</body>
+</html>

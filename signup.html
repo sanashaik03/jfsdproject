@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Online Course Management System</title>
+    <link rel="stylesheet" href="css/style.css"> <!-- Link to your CSS file -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f4f4f4;
+        }
+
+        /* Container for the left image and right form */
+        .signup-container {
+            display: flex;
+            width: 100%; /* Set to 100% to cover the entire width */
+            height: 100vh; /* Set height to cover the entire viewport */
+            border-radius: 0; /* Remove border radius for full coverage */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        /* Left section with text */
+        .signup-container .left {
+            width: 50%;
+            background: url('https://t3.ftcdn.net/jpg/03/55/60/70/360_F_355607062_zYMS8jaz4SfoykpWz5oViRVKL32IabTP.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #161414;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .left h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .left p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Right section with the form */
+        .signup-container .right {
+            width: 50%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 16px;
+            margin: 10px 0 5px;
+            color: #333;
+        }
+
+        input, select, button {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        button {
+            background-color: #101010;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0c0c0c;
+        }
+
+        .terms {
+            display: flex;
+            align-items: center;
+        }
+
+        .terms a {
+            color: #080808;
+            text-decoration: none;
+        }
+
+        .terms a:hover {
+            text-decoration: underline;
+        }
+
+        /* For responsiveness */
+        @media (max-width: 768px) {
+            .signup-container {
+                flex-direction: column;
+                width: 100%;
+                height: 100vh;
+            }
+
+            .signup-container .left {
+                width: 100%;
+                height: auto;
+            }
+
+            .signup-container .right {
+                width: 100%;
+                padding: 20px;
+            }
+        }
+
+        /* Sign In link positioning */
+        .signin-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .signin-link a {
+            color: #090909;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .signin-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sign In Link at the top-left corner -->
+    <div class="signin-link">
+        <a href="signin.html">Have an Account? SIGN IN</a>
+    </div>
+
+    <div class="signup-container">
+        <!-- Left side with text -->
+        <div class="left">
+            <h2>Create Your Account</h2>
+            <p>Start your learning journey with us. Gain new skills and knowledge at your own pace.</p>
+        </div>
+
+        <!-- Right side with the signup form -->
+        <div class="right">
+            <h1>Create an Account</h1>
+
+            <form id="signup-form" class="form-container" onsubmit="return validateForm()">
+                <label for="name">Full Name <span style="color: red;">*</span>:</label>
+                <input type="text" id="name" name="name" required placeholder="Enter your full name">
+
+                <label for="email">Email <span style="color: red;">*</span>:</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address">
+
+                <label for="password">Password <span style="color: red;">*</span>:</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password" minlength="6" title="Password should be at least 6 characters long">
+
+                <label for="confirm-password">Confirm Password <span style="color: red;">*</span>:</label>
+                <input type="password" id="confirm-password" name="confirm-password" required placeholder="Confirm your password">
+
+                <label for="phone">Phone Number <span style="color: red;">*</span>:</label>
+                <input type="text" id="phone" name="phone" required placeholder="Enter your phone number (+91)" pattern="^\+91\d{10}$" title="Please enter a valid phone number starting with +91">
+
+                <label for="role">Role <span style="color: red;">*</span>:</label>
+                <select id="role" name="role" required>
+                    <option value="">Select Role</option>
+                    <option value="student">Student</option>
+                    <option value="educator">Educator</option>
+                </select>
+
+                <div class="terms">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a> <span style="color: red;">*</span></label>
+                </div>
+
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function validateForm() {
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm-password").value;
+            var phone = document.getElementById("phone").value;
+            var role = document.getElementById("role").value;
+            var terms = document.getElementById("terms").checked;
+
+            // Validate required fields
+            if (!name || !email || !password || !confirmPassword || !phone || !role || !terms) {
+                alert("Please fill in all required fields.");
+                return false;
+            }
+
+            // Validate email format
+            var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email address.");
+                return false;
+            }
+
+            // Validate password length and match
+            if (password.length < 6) {
+                alert("Password should be at least 6 characters long.");
+                return false;
+            }
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return false;
+            }
+
+            // Validate phone number
+            var phonePattern = /^\+91\d{10}$/;
+            if (!phonePattern.test(phone)) {
+                alert("Please enter a valid phone number starting with +91.");
+                return false;
+            }
+
+            // Show success message
+            alert("You have successfully created an account!");
+            window.location.href = "signin.html";
+            return true;  // Allow the form to submit
+        }
+    </script>
+</body>
+</html>
